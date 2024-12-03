@@ -29,7 +29,7 @@ jobs:
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
-          project: "ericcson24-practica4"
+          project: "ericcson24-practica4-a-25"
           entrypoint: "main.ts"
           root: "."
           
