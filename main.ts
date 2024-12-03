@@ -71,7 +71,7 @@ const resolvers = {
         parts: await partCollection.find({ vehicleId: v._id }).toArray(),
         joke: await fetch("https://official-joke-api.appspot.com/random_joke")
           .then((res) => res.json())
-          .then((joke) => `${joke.setup} - ${joke.punchline}`),
+          .then((joke) => `${joke.setup} - ${joke.punchline}`), //para coger una broma random
       }));
     },
 
@@ -82,7 +82,7 @@ const resolvers = {
       const parts = await partCollection.find({ vehicleId: vehicle._id }).toArray();
       const joke = await fetch("https://official-joke-api.appspot.com/random_joke")
         .then((res) => res.json())
-        .then((joke) => `${joke.setup} - ${joke.punchline}`);
+        .then((joke) => `${joke.setup} - ${joke.punchline}`); //para coger una broma random
 
       return {
         id: vehicle._id.toString(),
