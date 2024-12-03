@@ -6,11 +6,9 @@ import { startStandaloneServer } from "@apollo/server/standalone";
 
 // Conexiones a la base de datos
 
-const MongoUrl = Deno.env.get("MONGO_URL");
 
-if (!MongoUrl) Deno.exit(1);
 
-const client = new MongoClient(MongoUrl);
+const client = new MongoClient("mongodb+srv://usuario:1234@cluster.il6dy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster");
 
 await client.connect();
 console.log("Conectado correctamente a la base de datos");
