@@ -8,7 +8,7 @@ import { startStandaloneServer } from "@apollo/server/standalone";
 
 const MongoUrl = Deno.env.get("MONGO_URL");
 
-if (!MongoUrl) Deno.exit(1);
+if (!MongoUrl) ;
 
 const client = new MongoClient(MongoUrl);
 
@@ -20,7 +20,7 @@ const db = client.db("tiendaRepuestos");
 const vehicleCollection = db.collection("vehicles");
 const partCollection = db.collection("parts");
 
-console.log("Base de datos activa");
+console.log("Base de datos activa"); 
 
 //-----------------------------------------------------------------------------------------------------------------------------\\
 
