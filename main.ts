@@ -7,7 +7,6 @@ import { startStandaloneServer } from "@apollo/server/standalone";
 // Conexiones a la base de datos
 
 
-
 const client = new MongoClient("mongodb+srv://usuario:1234@cluster.il6dy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster");
 
 await client.connect();
@@ -15,7 +14,7 @@ console.log("Conectado correctamente a la base de datos");
 
 // Base de datos y colecciones
 const db = client.db("tiendaRepuestos");
-const vehicleCollection = db.collection("vehicles");
+const vehicleCollection = db.collection("vehiculos");
 const partCollection = db.collection("parts");
 
 console.log("Base de datos activa"); 
@@ -42,10 +41,10 @@ const typeDefs = `#graphql
   }
 
   type Query {
-    getVehicles(manufacturer: String): [Vehicle!]!
-    getVehicle(id: String!): Vehicle
-    getParts: [Part!]!
-    getPartsByVehicle(vehicleId: String!): [Part!]!
+    vehicles(manufacturer: String): [Vehicle!]!
+    vehicle(id: String!): Vehicle
+    parts: [Part!]!
+    partsByVehicle(vehicleId: String!): [Part!]!
   }
 
   type Mutation {
@@ -60,7 +59,7 @@ const typeDefs = `#graphql
 
 const resolvers = {
   Query: {
-    getVehicles: async (_: unknown, args: { manufacturer?: string }) => {
+    vehicles: async (_: unknown, args: { manufacturer?: string }) => {
       const query = args.manufacturer ? { manufacturer: args.manufacturer } : {};
       const vehicles = await vehicleCollection.find(query).toArray();
 
@@ -76,7 +75,7 @@ const resolvers = {
       }));
     },
 
-    getVehicle: async (_: unknown, args: { id: string }) => {
+    vehicle: async (_: unknown, args: { id: string }) => {
       const vehicle = await vehicleCollection.findOne({ _id: new ObjectId(args.id) });
       if (!vehicle) return undefined;
 
@@ -95,7 +94,7 @@ const resolvers = {
       };
     },
 
-    getParts: async () => {
+    parts: async () => {
       const parts = await partCollection.find().toArray();
       return parts.map((p) => ({
         id: p._id.toString(),
@@ -105,7 +104,7 @@ const resolvers = {
       }));
     },
 
-    getPartsByVehicle: async (_: unknown, args: { vehicleId: string }) => {
+    partsByVehicle: async (_: unknown, args: { vehicleId: string }) => {
       const parts = await partCollection.find({ vehicleId: new ObjectId(args.vehicleId) }).toArray();
       return parts.map((p) => ({
         id: p._id.toString(),
